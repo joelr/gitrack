@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  	<title></title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  	<meta name="Description" content="XXXXXXXXXXXXXXXXXXXXXXXX" />
+  	<%= render :partial => "shared/keywords" %>
+    <%= render :partial => "shared/meta" %>
+    <%= render :partial => "shared/styles" %>
+    <%= render :partial => "shared/javascript" %>
+  </head>
+  <body <%= (@body_class.nil?) ? "" : "class=\"#{@body_class}\"" %> <%= (@body_id.nil?) ? "" : "id=\"#{@body_id}\"" %>> 
+  
+		<ul id="skiplinks">
+			<li><a accesskey="s" href="#content">Skip to main content</a></li>
+		</ul>
+    
+    <div id="container">
+
+			<div id="header">				
+				
+				
+				<div id="nav">
+					<ul>
+
+					</ul>
+				</div><!-- /nav -->
+				
+			</div><!-- /header -->
+			
+	    <div id="content">
+	    
+		    <div id="content_main">
+			
+					<%= content_tag "p", flash[:notice], :class => "flash notice" if flash[:notice] %>
+					<%= content_tag "p", flash[:error], :class => "flash error" if flash[:error] %>
+	    
+	    	  <%= yield %>
+		
+			  </div><!-- /content_main -->
+		  
+			  <div id="content_sub">
+		  
+			    <h2></h2>
+		    
+			  </div><!-- /content_sub -->
+			</div><!-- /content -->
+		
+    	<%= render :partial => "shared/footer" %>	
+	
+	  </div><!-- /container -->
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<%  github = GitHub.new(session[:user], session[:pass])
+#	user = GitHub.watched('joelr')
+	user = github.watched('joelr')
+
+%>
+<div id="dashboard">
+<ul class="repo_list" id="repo_listing">
+         
+
+<%	user.each do |repo| %>
+
+	<% if Time.parse(repo.pushed_at) > (Time.now - 1.days) %>
+	<li class="<%= repo.private ? "private" : "public" %> source">
+		<a href="https://github.com/<%= repo.owner %>/<%= repo.name %>">
+		<span class="owner"><%= repo.owner %></span>/<span class="repo"><%= repo.name %></span>
+			<% repo.branches.each_with_index do |index, value|%>
+				<%#= index[0].inspect %>
+				<% commits = GitHub.commits(repo.owner,repo.name,index[0]) %>
+				<% commits.each do |commit| %>
+					<% if Time.parse(commit.committed_date.to_s) > (Time.now - 1.days) %>
+					<%= commit.author["login"] %> (<%= commit.author["name"] %>)  <%= custom_time_ago_in_words(commit.committed_date.to_s)%><br />
+					<%= commit.message %><br />
+					<% end %>
+				<% end %>
+			
+			
+		<% end%>
+    </a> <%= custom_time_ago_in_words(repo.pushed_at)%>
+  </li>
+  <% end %>
+<% end %>
+</ul>
+</div>
