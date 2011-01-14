@@ -1,0 +1,20 @@
+
+	<div class="commits">
+		
+	      
+	<%
+	@commits = @commits.sort_by{|a| !a.committed_date.blank? ? Time.parse(a.committed_date.to_s).to_i : 0 }.reverse
+	 @commits.each do |commit| %>
+		<div class='<%= filter_class(commit.committed_date.to_s)%> commitdiv'>
+			<span><%= gravatar(commit.author["email"], {:size => "16"})%> <strong><%= commit.author["login"].blank? ? commit.author["name"] : commit.author["login"] %></strong> <%= custom_time_ago_in_words(commit.committed_date.to_s)%></span>
+	        <code><a href="http://github.com<%=commit.url %>" class="commit_link" attr-url="<%= url_for :controller => :base, :action => 'commit', :url => commit.url %>"><%= commit.tree %>/<%= get_commit(commit.url)[0..7] %></a></code>
+			<div class="message">
+	          <blockquote title="">
+	            <%= commit.message %>
+	          </blockquote>
+	        </div>	
+		</div>
+		
+	<% end %>
+	
+	</div>

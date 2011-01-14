@@ -1,31 +1,28 @@
-<%  github = GitHub.new(session[:user], session[:pass])
+<% 
 #	user = GitHub.watched('joelr')
-	user = github.watched('joelr')
+	user = @github.watched(session[:user]).sort_by{|a| Time.parse(a.pushed_at).to_i}.reverse
 
 %>
 <div id="dashboard">
+	<ul class='filter'>
+		<li><a href="#" class='selected' attr-target=".day1">24 hours</a></li>
+		<li><a href="#" attr-target=".day1, .day2">48 hours</a></li>
+		<li><a href="#" attr-target=".day1, .day2, .day7">1 week</a></li>
+		<li><a href="#" attr-target=".day1, .day2, .day7, .month1">1 month</a></li>
+		<li><a href="#" attr-target=".day1, .day2, .day7, .month1, .alltime">all time</a></li>
+	</ul>
 <ul class="repo_list" id="repo_listing">
          
+<%	i=0 
+user.each do |repo|  
+	i = i + 1 %>
 
-<%	user.each do |repo| %>
-
-	<% if Time.parse(repo.pushed_at) > (Time.now - 1.days) %>
-	<li class="<%= repo.private ? "private" : "public" %> source">
-		<a href="https://github.com/<%= repo.owner %>/<%= repo.name %>">
+	<% if Time.parse(repo.pushed_at) > (Time.now - 10.days) %>
+	<li class="<%= repo.private ? "private" : "public" %> source <%= filter_class(repo.pushed_at)%>">
+		<a class='loader_link' href="https://github.com/<%= repo.owner %>/<%= repo.name %>" attr-target="#target_<%= i%>">
 		<span class="owner"><%= repo.owner %></span>/<span class="repo"><%= repo.name %></span>
-			<% repo.branches.each_with_index do |index, value|%>
-				<%#= index[0].inspect %>
-				<% commits = GitHub.commits(repo.owner,repo.name,index[0]) %>
-				<% commits.each do |commit| %>
-					<% if Time.parse(commit.committed_date.to_s) > (Time.now - 1.days) %>
-					<%= commit.author["login"] %> (<%= commit.author["name"] %>)  <%= custom_time_ago_in_words(commit.committed_date.to_s)%><br />
-					<%= commit.message %><br />
-					<% end %>
-				<% end %>
-			
-			
-		<% end%>
     </a> <%= custom_time_ago_in_words(repo.pushed_at)%>
+	<div class='loader' id="target_<%= i%>" attr-url="<%= url_for :controller => :base, :action => 'commits', :branch => branch_list(repo.branches), :repo => repo.name, :owner => repo.owner rescue "" %>"></div>
   </li>
   <% end %>
 <% end %>

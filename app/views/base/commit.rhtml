@@ -1,0 +1,10 @@
+<% @commit.modified.each do |modified| %>
+	<h3><%= modified["filename"]%></h3>
+		<% modified["diff"].split("\n").each do |line| %>
+				<div class="<%= div_class(line) %>">
+				<pre><%= h line%></pre>
+				</div>
+			<% end %>
+	
+
+<% end unless @commit.modified.nil? %>

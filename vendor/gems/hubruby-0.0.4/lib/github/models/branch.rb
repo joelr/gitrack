@@ -6,6 +6,7 @@ module GitHub
       new(h)
     end
     def self.branches_from_hashes(h)
+      return [] if h.nil?
       h.inject([]) do |repositories, repository_attrs|
         repositories <<  repository_attrs
       end

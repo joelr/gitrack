@@ -44,6 +44,11 @@ module GitHub
       Commit.commits_from_hashes(j)
     end
     
+    def commit(owner, repository_name, commit)
+      j = json("/commits/show/#{owner}/#{repository_name}/#{commit}", :commit)
+      Commit.from_hash(j)
+    end
+    
     def branches(login, repository_name)
       j = json("/repos/show/#{login}/#{repository_name}/branches", :branches)
       Branch.branches_from_hashes(j)

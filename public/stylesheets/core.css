@@ -58,7 +58,7 @@ address{
 }
 
 blockquote{
-	
+	margin-left:40px;
 }
 
 cite{
@@ -187,7 +187,12 @@ a.replace span{
 .intro{
 	font-weight:bold;
 }
-
+#repo_listing {clear: both;}
+.filter li {float: left; padding:10px; border:1px solid: #dedede; background: #eee;list-style:none;}
+li a.selected {font-weight: bold;}
+#dashboard ul.repo_list .public {
+	background: url("/images/icons/public.png") no-repeat scroll 10px 8px #fff;
+}
 #dashboard ul.repo_list .private {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
@@ -219,4 +224,45 @@ ul.repo_list li a {
 a {
     color: #4183C4;
     text-decoration: none;
+}
+
+
+.commits li {
+    list-style-type: none;
+    margin-left: 3.5em;
+    margin-top: 0.25em;
+	margin-left:0px;
+	padding-left:0px;
+}
+.code_line {margin: 0px !important;padding:0px !important; background: #eee; height:20px;
+	font-size: 0.9em;
+	font-family: 'Bitstream Vera Sans Mono','Courier',monospace;
+	}
+	
+.line_num { background-color: #EAF2F5;
+    color: #999999;}
+
+.subtraction {	background-color: #FFDDDD;
+	    color: #000000;}
+	
+.addition {		background-color: #DDFFDD;
+		    color: #000000;}
+
+.commits ul 
+{
+	margin-left:0px;
+	padding-left:0px;
+}
+
+.commits img {
+    background-color: white;
+    border: 1px solid #D0D0D0;
+    margin: 0 3px;
+    padding: 1px;
+    vertical-align: middle;
+}
+
+.message {
+    color: #444444;
+    display: inline;
 }
